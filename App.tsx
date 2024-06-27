@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import BottomTabNavigator from './src/navigations/BottomTabNavigation'
-import HomeStackNavigator from './src/navigations/HomeStackNavigation'
+import { createStackNavigator } from '@react-navigation/stack'
+import MovieDetail from './MovieDetail'
+import Favorite from './Favorite'
 
-export default function App(): JSX.Element {
+const Stack = createStackNavigator()
 
+export default function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <BottomTabNavigator />
+      <Stack.Navigator initialRouteName="Favorite">
+        <Stack.Screen name="Favorite" component={Favorite} />
+        <Stack.Screen name="MovieDetail" component={MovieDetail} />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }
