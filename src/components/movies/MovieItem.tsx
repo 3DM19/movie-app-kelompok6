@@ -13,7 +13,6 @@ function MovieItem({movie, size, coverType}: MovieItemProps): JSX.Element {
   return (
     <TouchableOpacity 
       onPress={() => {
-        console.log('push')
         navigation.dispatch(pushAction)
       }}
     >
