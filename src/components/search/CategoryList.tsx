@@ -1,32 +1,42 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import MovieItem from '../components/movies/MovieItem';
-import type { Movie } from '../types/app';
+import MovieItem from '../../components/movies/MovieItem';
+import type { Movie } from '../../types/app';
+import { API_ACCESS_TOKEN, API_URL } from '@env';
 
-const Favorite = () => {
-  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
+const CategoryList = ({route} : {route: any}) => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const { genreName, genreId } = route.params;
 
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchMoviesByGenre = async () : Promise<void> => {
       try {
-        const initialData = await AsyncStorage.getItem('@FavoriteList');
-        if (initialData !== null) {
-          setFavoriteMovies(JSON.parse(initialData));
-        }
+        const response = await axios.get(`${API_URL}/discover/movie`, {
+          headers: {
+            "Accept": "application/json",
+            "Authorization": `Bearer ${API_ACCESS_TOKEN}`
+          },
+          params: {
+            with_genres: genreId,
+          }
+        });
+        const data = await response.data;
+        setMovies(data.results);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching movies:', error);
       }
     };
-    fetchFavorites();
+    console.log("category list")
+    fetchMoviesByGenre();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Favorite Movies</Text>
-      {favoriteMovies.length > 0 ? (
+      <Text style={styles.title}>Result of {genreName} Genre</Text>
+      {movies.length > 0 ? (
         <FlatList
-          data={favoriteMovies}
+          data={movies}
           numColumns={3}
           renderItem={({ item }) => (
             <View
@@ -68,4 +78,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Favorite;
+export default CategoryList;

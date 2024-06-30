@@ -1,23 +1,37 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import MovieDetail from '../screens/MovieDetail'
-import Home from '../screens/Home'
+import Search from '../screens/Search';
+import CategoryList from '../components/search/CategoryList';
 
 const Stack = createNativeStackNavigator()
 
-const HomeStackNavigator = (): React.JSX.Element => {
+const CategoryStackNavigator = (): React.JSX.Element => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Search"
     >
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="Search"
+        component={Search}
         options={
         {
           headerShown: false,
         }
         }
+      />
+        <Stack.Screen
+        name="CategorySearchResult"
+        component={CategoryList}
+        options={{
+          title: 'Category Search Result',
+          headerStyle: {
+            backgroundColor: '#fff',
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
       />
       <Stack.Screen
         name="MovieDetail"
@@ -36,4 +50,4 @@ const HomeStackNavigator = (): React.JSX.Element => {
   )
 }
 
-export default HomeStackNavigator
+export default CategoryStackNavigator

@@ -1,18 +1,18 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import MovieDetail from '../screens/MovieDetail'
-import Home from '../screens/Home'
+import Favorite from '../screens/Favorite';
 
 const Stack = createNativeStackNavigator()
 
-const HomeStackNavigator = (): React.JSX.Element => {
+const FavoriteStackNavigator = (): React.JSX.Element => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Favorite"
     >
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="Favorite"
+        component={Favorite}
         options={
         {
           headerShown: false,
@@ -36,4 +36,4 @@ const HomeStackNavigator = (): React.JSX.Element => {
   )
 }
 
-export default HomeStackNavigator
+export default FavoriteStackNavigator
